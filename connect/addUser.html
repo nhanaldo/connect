@@ -25,42 +25,8 @@
 
     </body>
     <script>
-        const contractAddress = "0x838F9b8228a5C95a7c431bcDAb58E289f5D2A4DC";
+        const contractAddress = "0x358AA13c52544ECCEF6B0ADD0f801012ADAD5eE3";
         const contractABI =[
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "UserList",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "id",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "userName",
-				"type": "string"
-			},
-			{
-				"internalType": "uint8",
-				"name": "age",
-				"type": "uint8"
-			},
-			{
-				"internalType": "string",
-				"name": "userAddress",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
 	{
 		"inputs": [
 			{
@@ -93,6 +59,34 @@
 			}
 		],
 		"name": "deleteUser",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_id",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_userName",
+				"type": "string"
+			},
+			{
+				"internalType": "uint8",
+				"name": "_age",
+				"type": "uint8"
+			},
+			{
+				"internalType": "string",
+				"name": "_userAddress",
+				"type": "string"
+			}
+		],
+		"name": "updateUser",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -174,38 +168,37 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "sortUsersByAge",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "UserList",
+		"outputs": [
+			{
 				"internalType": "string",
-				"name": "_id",
+				"name": "id",
 				"type": "string"
 			},
 			{
 				"internalType": "string",
-				"name": "_userName",
+				"name": "userName",
 				"type": "string"
 			},
 			{
 				"internalType": "uint8",
-				"name": "_age",
+				"name": "age",
 				"type": "uint8"
 			},
 			{
 				"internalType": "string",
-				"name": "_userAddress",
+				"name": "userAddress",
 				"type": "string"
 			}
 		],
-		"name": "updateUser",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	}
 ];
