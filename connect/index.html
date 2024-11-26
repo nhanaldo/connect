@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="theme-color" content="#000000" />
+        <title>WalletConnect Example</title>
+        <style>
+            body{
+                background: url('./image_processing20200518-8681-jywsgz.png');
+                width: 100vh;
+                height: 100vh;
+            }
+            #content{
+                color: white;
+                text-align: center;
+            }
+           #page-title{
+             color: yellow;
+           }
+        </style>
+    </head>
+
+    <body>
+        <div id="content">
+            <h1 id="page-title">WalletConnect</h1>
+            <h2>Web3 Connect</h2>
+            <div id="page-actions">
+                <p>Click to Connect</p>
+                <button id="connect-button">WalletConnect</button>
+            </div>
+            <h3 id="kq">Disconnect</h3>
+        </div>
+    </body>
+    <script>
+        let kq = document.getElementById('kq');
+        document.getElementById('connect-button').addEventListener('click', event => {
+        let account;
+        ethereum.request({method: 'eth_requestAccounts'}).then(accounts => {
+            account = accounts[0];
+            console.log(account);
+            kq.innerHTML = "Connected : "+account;
+        }); 
+        });
+    </script>
+</html>

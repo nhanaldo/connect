@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script
+            src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+        <title>List User</title>
+    </head>
+    <body>
+        <h2>List of Users</h2>
+        <table border="1" id="userTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be added here dynamically -->
+            </tbody>
+        </table>
+    </body>
+    <script>
+        const contractAddress = "0x838F9b8228a5C95a7c431bcDAb58E289f5D2A4DC";
+        const contractABI = [
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "UserList",
+                "outputs": [
+                    {
+                        "internalType": "string",
+                        "name": "id",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "userName",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint8",
+                        "name": "age",
+                        "type": "uint8"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "userAddress",
+                        "type": "string"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_userName",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint8",
+                        "name": "_age",
+                        "type": "uint8"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_userAddress",
+                        "type": "string"
+                    }
+                ],
+                "name": "addUser",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_id",
+                        "type": "string"
+                    }
+                ],
+                "name": "deleteUser",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getAllUsers",
+                "outputs": [
+                    {
+                        "components": [
+                            {
+                                "internalType": "string",
+                                "name": "id",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "userName",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "uint8",
+                                "name": "age",
+                                "type": "uint8"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "userAddress",
+                                "type": "string"
+                            }
+                        ],
+                        "internalType": "struct Loop.User[]",
+                        "name": "",
+                        "type": "tuple[]"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+
+        // Check if MetaMask is installed
+        if (typeof window.ethereum !== 'undefined') {
+            const web3 = new Web3(window.ethereum);
+
+            window.ethereum.request({ method: 'eth_requestAccounts' })
+                .then(accounts => {
+                    const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+                    // Fetch all users
+                    contract.methods.getAllUsers().call()
+                        .then(users => {
+                            const tableBody = document.querySelector("#userTable tbody");
+                            users.forEach(user => {
+                                const row = document.createElement("tr");
+
+                                const idCell = document.createElement("td");
+                                idCell.textContent = user.id;
+
+                                const nameCell = document.createElement("td");
+                                nameCell.textContent = user.userName;
+
+                                const ageCell = document.createElement("td");
+                                ageCell.textContent = user.age;
+
+                                const addressCell = document.createElement("td");
+                                addressCell.textContent = user.userAddress;
+
+                                // Add Action column with Edit button
+                                const actionCell = document.createElement("td");
+                                const editButton = document.createElement("button");
+                                editButton.textContent = "Edit";
+                                editButton.onclick = function() {
+                                    // Redirect to the edit user page with the user ID as a query parameter
+                                    window.location.href = `/edit-user.html?id=${user.id}`;
+                                };
+
+                                actionCell.appendChild(editButton);
+
+                                // Append each cell to the row
+                                row.appendChild(idCell);
+                                row.appendChild(nameCell);
+                                row.appendChild(ageCell);
+                                row.appendChild(addressCell);
+                                row.appendChild(actionCell); // Add the Action column
+
+                                // Add the row to the table body
+                                tableBody.appendChild(row);
+                            });
+                        })
+                        .catch(err => console.error("Error fetching users:", err));
+                })
+                .catch(err => console.error("MetaMask connection error:", err));
+        } else {
+            console.error("MetaMask is not installed!");
+        }
+    </script>
+</html>
